@@ -1,0 +1,306 @@
+/* css/blog-post.css */
+
+/* Global Article Layout & Typography */
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  line-height: 1.7;
+  color: #24292e;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+h1 {
+  font-size: 2.25rem;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+.byline {
+  color: #586069;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #e1e4e8;
+  padding-bottom: 1rem;
+}
+
+h2 {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+}
+
+/* Legend Container Box */
+.legend {
+  display: inline-block;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  color: #000000;
+  max-width: 280px;
+}
+
+/* Bold Title Above Bar */
+.legend-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  color: #000000;
+}
+
+/* Smooth Gradient Ramp Bar */
+.gradient-bar {
+  width: 100%;
+  height: 14px;
+  /* Transitions from near-white/pale mint to vibrant teal */
+  background: linear-gradient(
+    to right,
+    #be1a1a 0%,
+    #d0311e 25%,
+    #fb6c00 50%,
+    #f7d87f 75%,
+    #f7d87f 100%
+  );
+}
+
+/* Labels Row with Tick Marks */
+.legend-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  margin-top: 3px;
+  color: #000000;
+}
+
+.label-low {
+  /* Keeps the left pipe aligned flush with the left tip */
+  text-align: left;
+}
+
+.label-high {
+  /* Shifts the container right so '|' lines up with the far-right edge of the bar */
+  transform: translateX(calc(100%));
+  white-space: nowrap;
+}
+
+/* Inline Map Styling */
+.inline-map {
+  width: 100%;
+  height: 480px;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem; /* Tight gap before the controls */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e1e4e8;
+}
+
+/* Relative wrapper to anchor absolute positioning */
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+/* OVERLAY SEARCH CONTAINER (Top-Left inside Map) */
+.map-search-container {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 10; /* Keeps search box above map tiles & controls */
+  width: 300px;
+  max-width: calc(
+    100% - 80px
+  ); /* Leave space for navigation controls on mobile */
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Input Styling with Frosted Glass Overlay Effect */
+.search-input-wrapper input[type="text"] {
+  width: 100%;
+  padding: 9px 32px 9px 12px;
+  font-size: 0.88rem;
+  color: #24292e;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.search-input-wrapper input[type="text"]:focus {
+  background: #ffffff;
+  border-color: #0969da;
+  box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.2);
+}
+
+.search-input-wrapper button {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #8c959f;
+  cursor: pointer;
+  display: none;
+}
+
+.search-input-wrapper button:hover {
+  color: #24292e;
+}
+
+/* Dropdown Suggestions List */
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+  margin-top: 6px;
+  padding: 4px 0;
+  list-style: none;
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 20;
+  display: none;
+}
+
+.suggestions-list li {
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  color: #24292e;
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+}
+
+.suggestions-list li:hover {
+  background-color: #f0f7ff;
+  color: #0969da;
+  font-weight: 600;
+}
+
+.suggestions-list li.selected-suggestion,
+.suggestions-list li:hover {
+  background-color: #f0f7ff;
+  color: #0969da;
+  font-weight: 600;
+}
+
+/* Control Container Below Map */
+.map-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  padding: 4px 0;
+}
+
+.toggle-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Rounded Pill Buttons */
+.pill-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #d0d7de;
+  border-radius: 20px; /* Fully rounded pills */
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #24292e;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.pill-toggle:hover {
+  border-color: #0969da;
+  background-color: #f6f8fa;
+}
+
+.color-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  transition: opacity 0.15s ease;
+}
+
+/* Inactive State Styling */
+.pill-toggle.inactive {
+  background-color: #f6f8fa;
+  color: #8c959f3b;
+  border-color: #e1e4e8;
+}
+
+.pill-toggle.inactive .color-dot {
+  opacity: 0.25;
+}
+
+/* Selected styling */
+.pill-toggle.selected {
+  background-color: #2020200c;
+  color: #24292e;
+  border-color: #e1e4e8;
+}
+
+/* Custom MapLibre Popup Container */
+.maplibregl-popup-content {
+  padding: 10px 14px;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  border: 1px solid #e1e4e8;
+  background: #ffffff;
+}
+
+/* Popup Typography */
+.popup-title {
+  margin: 0 0 6px 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1f2328;
+}
+
+.popup-divider {
+  border: 0;
+  border-top: 1px solid #e1e4e8;
+  margin: 4px 0 8px 0;
+}
+
+.map-popup-content p {
+  margin: 3px 0;
+  font-size: 0.82rem;
+  color: #57606a;
+  line-height: 1.4;
+}
+
+.popup-highlight {
+  font-weight: 700;
+  color: #da5609;
+}

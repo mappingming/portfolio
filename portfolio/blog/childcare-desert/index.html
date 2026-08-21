@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Childcare Deserts in Toronto | Mingsze Ho</title>
+
+  <script src="https://unpkg.com/maplibre-gl@^4.0.0/dist/maplibre-gl.js"></script>
+  <link href="https://unpkg.com/maplibre-gl@^4.0.0/dist/maplibre-gl.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../blog-post.css"
+
+</head>
+<body>
+
+  <header>
+    <h1>Childcare Deserts in Toronto</h1>
+    <div class="byline">Published on August 5, 2026 • By Mingsze Ho</div>
+  </header>
+
+  <article>
+    <p>
+        As a new mother, I've been on countless waitlists, struggling to find daycare for my child. I know I'm not the only one — many of my mommy friends are on those same lists, hoping to secure a spot, ideally one covered under the Canada-Wide Early Learning and Child Care (CWELC) system. If you have deep pockets, skipping the line might be easier, but who has that kind of money in this economy?<br></br>
+        Through coicidence, I secured a spot, although it was not my ideal location as it’s slightly out of my commute but close to home. It got me thinking: is child care hard to find because there’s limited centres? Are there "prime locations" for a daycare facility, and does that shape who actually gets access?
+    </p>
+
+    <h2>The Analysis: Supply, Demand and Walkability</h2>
+    <p>
+        The first thing I analyzed was the childcare desert ratio across Toronto's 158 neighbourhoods, using a simple capacity-to-population metric:
+    </p>
+
+    <math display="block">
+        <mrow>
+                <mi>Childcare Desert Ratio</mi>
+    <mo>=</mo>
+            <mfrac>
+            <mrow>
+                <mrow>
+                    <msup>
+                    <mi>Total Childcare Capacity</mi>
+                    </msup>
+                </mrow>
+            </mrow>
+            <mrow>
+                <mi>Total Population 0-4</mi>
+            </mrow>
+            </mfrac>
+        </mrow>
+    </math>
+
+    <p>        
+        127 of 158 neighbourhoods have more children than daycare spots with a ratio below 1.0. The city-wide baseline is roughly 0.68 (85,143 spaces for 123,415 children). Only 31 neighbourhoods clear a ratio of 1.0.
+    </p>
+
+    <div class="legend">
+        <div class="legend-title">Childcare Desert Ratio</div>   
+        <div class="gradient-bar"></div>
+        <div class="legend-labels">
+            <span class="label-low">| Low</span>
+            <span class="label-high">| High</span> </div>
+        </div>
+    </div>
+
+    <div class="map-wrapper">
+    
+        <div class="map-search-container">
+            <div class="search-input-wrapper">
+            <input 
+                type="text" 
+                id="neighborhood-search" 
+                placeholder="Search Toronto neighborhood..." 
+                autocomplete="off"
+            />
+            <button id="clear-search-btn" title="Clear search">&times;</button>
+            </div>
+            <ul id="search-suggestions" class="suggestions-list"></ul>
+        </div>
+
+        <div id="map-ratio" class="inline-map"></div>
+
+    </div>
+
+    <div class="map-controls">
+   
+    <div class="toggle-group">
+        <button id="filter-all" class="pill-toggle active selected">
+        All 158 Neighborhoods
+        </button>
+
+        <button id="filter-severe" class="pill-toggle">
+        <span class="swatch-box" style="border: 5px solid #BE1A1A;"></span>
+        Severe Deserts (< 0.25)
+        </button>
+
+        <button id="filter-moderate" class="pill-toggle">
+        <span class="swatch-box" style="border: 5px solid #FB6C00;"></span>
+        Moderate Deserts (0.25 – 0.75)
+        </button>
+
+        <button id="toggle-centers" class="pill-toggle active selected">
+        <span class="color-dot" style="background-color: hsl(236, 69%, 21%); border: 1px solid hsl(0, 0%, 100%);"></span>
+        Childcare Facilities
+        </button>
+    </div>
+    </div>
+    <p>
+        But a boundary line doesn't stop a parent from crossing a street, so I went further: could a parent actually reach a centre within a 10-minute walk? To do this, I built a custom routing network using the City of Toronto's street and pedestrian data, generated 10-minute walksheds around all 1,089 licensed centres, then inverse-clipped the result to isolate the "walkability gap islands" — pockets sitting more than 10 minutes from any facility.
+    </p>
+
+    <div class="legend">
+        <div class="legend-title">Childcare Desert Ratio</div>   
+        <div class="gradient-bar"></div>
+        <div class="legend-labels">
+            <span class="label-low">| Low</span>
+            <span class="label-high">| High</span> </div>
+        </div>
+    </div>
+    
+    <div class="map-section-2">
+
+        <div class="map-wrapper">
+
+            <div class="map-search-container">
+                <div class="search-input-wrapper">
+                <input 
+                    type="text" 
+                    id="neighborhood-search-2" 
+                    placeholder="Search Toronto neighborhood..." 
+                    autocomplete="off"
+                />
+                <button id="clear-search-btn-2" title="Clear search">&times;</button>
+                </div>
+                <ul id="search-suggestions-2" class="suggestions-list"></ul>
+            </div>
+
+            <div id="map-walkability" class="inline-map"></div>
+        </div>
+
+        <div class ="map-controls">
+            <button id="toggle-walk-5" class="pill-toggle active">
+                <span class="color-dot" style="background-color: #87b42d;"></span>
+                5-Min Walk Area
+            </button>
+
+            <button id="toggle-walk-10" class="pill-toggle active">
+                <span class="color-dot" style="background-color: #649c81;"></span>
+                10-Min Walk Area
+            </button>
+            <button id="toggle-walk-centers" class="pill-toggle active selected">
+                <span class="color-dot" style="background-color: #11165a; border: 1px solid hsl(0, 0%, 100%);"></span>
+            Childcare Facilities
+            </button>
+        </div>
+    </div>
+    
+
+    <p>
+        The worst gaps appears to be in Morningside Heights and West Humber-Clairville. Although knowing the neighbourhood and viewing the satellite imagery may expose the reason why as Morningside Heights contains the Rouge National Urban Park, the other by the Woodbine Racetrack footprint. But Morningside's residential blocks stand out for a more fixable reason: suburban, car-centric streets that discourage walking in the first place.
+    </p>
+
+    <h2>Why This Data Doesn't Tell the Whole Story</h2>
+
+    
+    <p>
+      <b>Not every family needs a spot.</b> Multi-generational households, extended parental leave, stay-at-home caregiving, plenty of families never touch this system, by choice. I'm not arguing daycare is mandatory. I'm arguing the option should exist within a 10-minute walk regardless of income, because right now it doesn't. Families with money or flexibility can absorb a desert; families without it are stuck with a 40-minute round trip, an unlicensed arrangement, or worst yet leaving the workforce all together. Building capacity provides options for family to choose.<br></br>
+
+      <b>The commuter-effect</b>. Some centres cluster in office and industrial parks specifically to catch commuting parents, not neighbourhood residents. Banbury-Don Mills filled with dense corporate offices posts one of the healthier ratios in the city, but a chunk of that capacity is likely filled by parents who work there and commute their kids in, not families who live there. That inflates the "surplus" on paper while quietly draining capacity from the residential neighbourhoods those parents actually go home to. A truer metric would separate residential-serving capacity from workplace-serving capacity, weighted against local employment density.
+    </p>
+
+    <h2>Planning for Tomorrow's Families</h2>
+    <p>
+        A next iteration of this analysis needs a forward-looking layer, something like:
+    </p>
+    <ul>
+        <li><b>Population growth projections</b> to see which neighbourhoods' 0–4 populations are trending up, not just where they sit now.</li>
+        <li>A combined "<b>future need index</b>" blending current ratio, walkability gap severity, and projected 0–4 growth, to rank neighbourhoods by urgency rather than just current deficit.</li>
+    </ul>  
+    <p>
+        That shifts this spatial analysis from a diagnosis of where child care is scarce today to a tool for deciding where the next CWELC-funded centre should actually go — before the waitlist forms, not after.
+    </p>
+    <hr>
+    <p>
+        Mapping these gaps gave me a clearer picture of the hurdles baked into our city's geography. As a mother, my daycare search felt difficult and tiresome. In an ideal world, it’ll be great to be able to walk my son to daycare before work and pick him up conveniently after work without having to put my feet on the peddle. 👩‍👦
+    </p>
+
+
+  </article>
+
+  <script src="./maps.js" defer></script>
+
+</body>
+</html>
