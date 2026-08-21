@@ -11,7 +11,7 @@ const projectsData = [
   },
   {
     title: "Childcare Deserts in Toronto",
-    img: "childcareDesert.jpg",
+    img: "childcareDesert.png",
     url: "https://mappingming.github.io/portfolio/projects/blog/childcare-desert/",
     description:
       "A spatial analysis of Toronto's childcare deserts that maps where daycare supply falls short of demand and tests real-world walkability.",
